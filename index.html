@@ -27,7 +27,7 @@
 
     <div class="findPlayer">
       <button id="find">Search for a player</button>
-      <img src="loading.gif" alt="Loading" class="loading" />
+      <img src="loading.gif" alt="Loading" id="loading" />
     </div>
 
     <div id="bigCont">
@@ -44,4 +44,64 @@
       </div>
     </div>
   </body>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script >
+    
+    document.getElementById('loading').style.display="none"
+    document.getElementById('bigCont').style.display="none"
+    document.getElementById('userCont').style.display="none"
+    document.getElementById('opponentCont').style.display="none"
+    document.getElementById('valueCont').style.display="none"
+    document.getElementById('whosTurn').style.display="none"
+
+
+    const socket=io()
+    let name;
+
+    document.getElementById("find").addEventListener("click", function () {
+      name = document.getElementById('name').value
+      document.getElementById('user').innerText=name
+
+      if(name==null || name ==''){
+        alert('Digite um nome, por favor')
+      } else {
+        socket.emit('find', {name: name})
+        document.getElementById('loading').style.display='flex'
+        document.getElementById('find').disable=true
+
+      }
+
+    })
+
+    socket.on('find', (e)=> {
+      let allPlayersArray=e.allPlayers
+
+      console.log(allPlayersArray);
+
+      document.getElementById('userCont').style.display="block"
+      document.getElementById('opponentCont').style.display="block"
+      document.getElementById('valueCont').style.display="block"
+      document.getElementById('loading').style.display="none"
+      document.getElementById('name').style.display="none"
+      document.getElementById('find').style.display="none"
+      document.getElementById('bigCont').style.display="flex"
+      document.getElementById('whosTurn').style.display="block"
+      document.getElementById('whosTurn').style.innerText= "X's Turn"
+  
+      let oponnent
+      let value
+  
+      const foundObj=allPlayersArray.find(obj=> obj.p1.p1name==`${name}` || obj.p2.p2name==`${name}`)
+  
+      foundObj.p1.p1name==`${name}` ? oponnent=foundObj.p2.p2name : oponnent=foundObj.p1.p1name
+      foundObj.p1.p1name==`${name}` ? value=foundObj.p2.p2value : value=foundObj.p1.p1value
+  
+      document.getElementById('oponnent').innerText=oponnent
+      document.getElementById('value').innerText=value
+    })
+
+
+  </script>
 </html>
