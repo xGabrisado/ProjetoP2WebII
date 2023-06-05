@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
                 let players = {
                     p1: player1,
                     p2: player2,
-                    turn: 1
+                    sum: 1
                 }
 
                 playingArray.push(players)
@@ -53,13 +53,13 @@ io.on('connection', (socket) => {
             let objToChange = playingArray.find(obj => obj.p1.p1name === e.name)
 
             objToChange.p1.p1move = e.id
-            objToChange.turn++
+            objToChange.sum++
         }
         if (e.value == 'o') {
             let objToChange = playingArray.find(obj => obj.p2.p2name === e.name)
 
             objToChange.p2.p2move = e.id
-            objToChange.turn++
+            objToChange.sum++
         }
 
         io.emit('playing', { allPlayers: playingArray })

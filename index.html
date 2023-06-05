@@ -75,7 +75,7 @@
       let allPlayersArray = e.allPlayers;
       console.log(allPlayersArray);
 
-      if(name!=''){
+      if (name != "") {
         document.getElementById("userCont").style.display = "block";
         document.getElementById("opponentCont").style.display = "block";
         document.getElementById("valueCont").style.display = "block";
@@ -121,7 +121,7 @@
       p1id = foundObj.p1.p1move;
       p2id = foundObj.p2.p2move;
 
-      if (foundObj.turn % 2 == 0) {
+      if (foundObj.sum % 2 == 0) {
         document.getElementById("whosTurn").innerText = "O's Turn";
       } else {
         document.getElementById("whosTurn").innerText = "X's Turn";
@@ -138,10 +138,10 @@
         document.getElementById(`${p2id}`).style.color = "black";
       }
 
-      checkWinner(name, foundObj.turn);
+      checkWinner(name, foundObj.sum);
     });
 
-    function checkWinner(name, turn) {
+    function checkWinner(name, sum) {
       document.getElementById("btn1").innerText == ""
         ? (b1 = "a")
         : (b1 = document.getElementById("btn1").innerText);
@@ -182,13 +182,13 @@
         socket.emit("gameOver", { name: name });
 
         setTimeout(() => {
-          turn % 2 == 0 ? alert(`'X' VENCEU !!`) : alert(`'O' VENCEU !!`);
+          sum % 2 == 0 ? alert(`'X' VENCEU !!`) : alert(`'O' VENCEU !!`);
 
           setTimeout(() => {
             location.reload();
           }, 2000);
         }, 100);
-      } else if (turn == ) {
+      } else if (sum == 10) {
         socket.emit("gameOver", { name: name });
 
         setTimeout(() => {
