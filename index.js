@@ -17,35 +17,59 @@ let array = []
 let playingArray = []
 
 io.on('connection', (socket) => {
-    socket.on("find", (e)=> {
-        if (e.name!=null){
+    socket.on("find", (e) => {
+        if (e.name != null) {
             array.push(e.name)
-            
-            if (array.length>=2){
+
+            if (array.length >= 2) {
                 let player1 = {
-                    p1name:array[0],
-                    p1value:'x',
+                    p1name: array[0],
+                    p1value: 'x',
                     p1move: ''
                 }
                 let player2 = {
-                    p2name:array[1],
-                    p2value:'o',
+                    p2name: array[1],
+                    p2value: 'o',
                     p2move: ''
                 }
-                
+
                 let players = {
                     p1: player1,
-                    p2: player2
+                    p2: player2,
+                    turn: 1
                 }
-                
+
                 playingArray.push(players)
-                
-                array.splice(0,2)
-                
-                io.emit('find', {allPlayers: playingArray})
+
+                array.splice(0, 2)
+
+                io.emit('find', { allPlayers: playingArray })
             }
         }
     })
+
+    socket.on('playing', (e) => {
+        if (e.value == 'x') {
+            let objToChange = playingArray.find(obj => obj.p1.p1name === e.name)
+
+            objToChange.p1.p1move = e.id
+            objToChange.turn++
+        }
+        if (e.value == 'o') {
+            let objToChange = playingArray.find(obj => obj.p2.p2name === e.name)
+
+            objToChange.p2.p2move = e.id
+            objToChange.turn++
+        }
+
+        io.emit('playing', { allPlayers: playingArray })
+    })
+
+    socket.on('gameOver', (e) => {
+        playingArray = playingArray.filter(obj => obj.p1.p1name !== e.name)
+        console.log(playingArray);
+    })
+
 })
 
 app.get('/', (req, res) => {
