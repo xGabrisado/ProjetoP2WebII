@@ -24,12 +24,12 @@ io.on('connection', (socket) => {
             if (array.length >= 2) {
                 let player1 = {
                     p1name: array[0],
-                    p1value: 'x',
+                    p1value: '🐓',
                     p1move: ''
                 }
                 let player2 = {
                     p2name: array[1],
-                    p2value: 'o',
+                    p2value: '🦃',
                     p2move: ''
                 }
 
@@ -49,13 +49,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on('playing', (e) => {
-        if (e.value == 'x') {
+        if (e.value == '🐓') {
             let objToChange = playingArray.find(obj => obj.p1.p1name === e.name)
 
             objToChange.p1.p1move = e.id
             objToChange.sum++
         }
-        if (e.value == 'o') {
+        if (e.value == '🦃') {
             let objToChange = playingArray.find(obj => obj.p2.p2name === e.name)
 
             objToChange.p2.p2move = e.id

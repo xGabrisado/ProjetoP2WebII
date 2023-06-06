@@ -41,6 +41,10 @@ h1 {
   font-weight: bold;
 }
 
+#valueCont span {
+  font-size: 50px;
+}
+
 .nameEnter {
   display: flex;
   flex-direction: column;
@@ -103,4 +107,5 @@ h1 {
   height: 100px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 50px;
 }

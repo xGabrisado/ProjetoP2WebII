@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jogo da Velha</title>
+    <title>ROOSTER FIGHT</title>
+    <link rel="icon" href="favicon-16x16.png" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>TIC-TAC-TOE</h1>
+    <h1>TIC-TAC-TCHIKEN</h1>
 
     <div class="playerCont">
       <p id="userCont">Voce: <span id="user"></span></p>
@@ -18,7 +19,7 @@
     <br />
     <p id="valueCont">Você está jogando com <span id="value"></span></p>
     <br />
-    <p id="whosTurn">X's turn</p>
+    <p id="whosTurn">🐓's turn</p>
 
     <div class="nameEnter">
       <p id="enterName">Insira seu nick:</p>
@@ -122,21 +123,22 @@
       p2id = foundObj.p2.p2move;
 
       if (foundObj.sum % 2 == 0) {
-        document.getElementById("whosTurn").innerText = "O's Turn";
+        document.getElementById("whosTurn").innerText = "🦃's Turn";
       } else {
-        document.getElementById("whosTurn").innerText = "X's Turn";
+        document.getElementById("whosTurn").innerText = "🐓's Turn";
       }
 
       if (p1id != "") {
-        document.getElementById(`${p1id}`).innerText = "X";
+        document.getElementById(`${p1id}`).innerText = "🐓";
         document.getElementById(`${p1id}`).disabled = true;
         document.getElementById(`${p1id}`).style.color = "black";
       }
       if (p2id != "") {
-        document.getElementById(`${p2id}`).innerText = "O";
+        document.getElementById(`${p2id}`).innerText = "🦃";
         document.getElementById(`${p2id}`).disabled = true;
         document.getElementById(`${p2id}`).style.color = "black";
       }
+      console.log(foundObj.sum);
 
       checkWinner(name, foundObj.sum);
     });
@@ -177,12 +179,13 @@
         (b1 == b4 && b4 == b7) ||
         (b2 == b5 && b5 == b8) ||
         (b3 == b6 && b6 == b9) ||
-        (b7 == b5 && b5 == b9)(b3 == b5 && b5 == b7)
+        (b1 == b5 && b5 == b9) ||
+        (b3 == b5 && b5 == b7)
       ) {
         socket.emit("gameOver", { name: name });
 
         setTimeout(() => {
-          sum % 2 == 0 ? alert(`'X' VENCEU !!`) : alert(`'O' VENCEU !!`);
+          sum % 2 == 0 ? alert(`'🐓' VENCEU !!`) : alert(`'🐔' VENCEU !!`);
 
           setTimeout(() => {
             location.reload();
@@ -192,11 +195,11 @@
         socket.emit("gameOver", { name: name });
 
         setTimeout(() => {
-          alert("DRAW!!");
+          alert("EMPATEE!!");
 
-          setTimeout(() => {
-            location.reload();
-          }, 2000);
+          // setTimeout(() => {
+          //   location.reload();
+          // }, 2000);
         }, 100);
       }
     }
